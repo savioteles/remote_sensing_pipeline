@@ -40,6 +40,8 @@ public class BfastParametersTest extends RichMapFunction<byte[], String> {
         scriptsFile.add("/home/savio/workspace/remote_sensing_pipeline/files/new_bfast_java.r");
         scriptsFile.add("/home/savio/workspace/remote_sensing_pipeline/files/new_bfast_wavelet_java.r");
         
+        String output = "";
+        
         for (String scriptFile: scriptsFile) {
 	        double timeUnits = 365;
 	        double timeChange = 0.5;
@@ -52,19 +54,19 @@ public class BfastParametersTest extends RichMapFunction<byte[], String> {
 	        	
 	        	double h = (timeChange*timeUnits)/period/bands;
 	        	String season = "harmonic";
-	        	executeParameterBfast(h, season, dates, inputFile, scriptFile);
+	        	output += executeParameterBfast(h, season, dates, inputFile, scriptFile);
 	        	
 	        	season = "dummy";
-	        	executeParameterBfast(h, season, dates, inputFile, scriptFile);
+	        	output += executeParameterBfast(h, season, dates, inputFile, scriptFile);
 	        	
 	        	season = "none";
-	        	executeParameterBfast(h, season, dates, inputFile, scriptFile);
+	        	output += executeParameterBfast(h, season, dates, inputFile, scriptFile);
 	        	
 	        	timeChange += 0.5;
 	        }
         }
         
-        return "";
+        return output;
     }
     
     private String executeParameterBfast(double h, String season, String dates, String inputFile, String scriptFile) throws IOException, InterruptedException {
