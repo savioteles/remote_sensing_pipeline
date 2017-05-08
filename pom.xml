@@ -253,8 +253,8 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
-							<copy file="${basedir}/files/bfast_java.r"
-									tofile="${basedir}/files/bfast_java.r" overwrite="false" />
+							<copy file="${basedir}/files/bfast_java.r" tofile="${basedir}/files/bfast_java.r"
+								overwrite="false" />
 							<relocations>
 								<relocation>
 									<pattern>com.google.protobuf</pattern>
@@ -348,10 +348,11 @@
 							</filters>
 							<!-- If you want to use ./bin/flink run <quickstart jar> uncomment 
 								the following lines. This will add a Main-Class entry to the manifest file -->
-							<transformers> 
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"> 
-									<mainClass>com.gogeo.experimental.PipelineBfast></mainClass> 
-								</transformer> 
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>com.gogeo.experimental.flink.remote_sensing.PipelineBFast</mainClass>
+								</transformer>
 							</transformers>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
 						</configuration>

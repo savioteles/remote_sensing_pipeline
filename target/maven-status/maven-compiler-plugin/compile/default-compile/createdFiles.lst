@@ -1,7 +1,11 @@
+com/gogeo/experimental/flink/remote_sensing/ConvertTifToCsvData.class
 com/gogeo/experimental/flink/remote_sensing/LoadData.class
+com/gogeo/experimental/flink/remote_sensing/ParallelLoadTifData.class
+com/gogeo/experimental/flink/remote_sensing/PipelineBFast$1.class
+com/gogeo/experimental/flink/remote_sensing/ParallelLoadTifData$LoadThread.class
 com/gogeo/experimental/flink/remote_sensing/Bfast.class
+com/gogeo/experimental/flink/remote_sensing/PipelineBFast$RawSchema.class
 com/gogeo/experimental/flink/remote_sensing/DataWriter.class
-com/gogeo/experimental/flink/remote_sensing/PipelineBfast$1.class
-com/gogeo/experimental/flink/remote_sensing/PipelineBfast.class
-com/gogeo/experimental/flink/remote_sensing/PipelineBfast$RawSchema.class
+com/gogeo/experimental/flink/remote_sensing/LoadCsvData.class
+com/gogeo/experimental/flink/remote_sensing/PipelineBFast.class
 com/gogeo/experimental/flink/remote_sensing/TesteR.class
