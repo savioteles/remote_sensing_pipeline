@@ -33,17 +33,18 @@ public class CsvDataWriter {
 
 		KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 		consumer.subscribe(Arrays.asList(topic));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(output));
 		
 		while (true) {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(output));
 			ConsumerRecords<String, String> records = consumer.poll(1000);
 			for (ConsumerRecord<String, String> record : records) {
 				String[] values = record.value().split("\n");
 				for (String value: values) {
-//					writer.write(value +"\n");
+					writer.write(value +"\n");
 					System.out.println(value);
 				}
 			}
+			writer.flush();
 		}
 	}
 }

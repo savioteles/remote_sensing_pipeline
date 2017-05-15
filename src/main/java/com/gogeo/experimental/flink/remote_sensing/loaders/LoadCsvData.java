@@ -62,6 +62,7 @@ public class LoadCsvData {
 	        	
 	        	localBlockSize++;
 	        	if (localBlockSize >= blockSize) {
+	        		System.out.println("Sending " +localBlockSize +" ndvi time series ");
 	        		lineToSend += line.trim();
 	        		sendToKafka(lineToSend, topic, producer);
 	        		lineToSend = "";
@@ -73,8 +74,10 @@ public class LoadCsvData {
 	        br.close();
         }
         
-        if(!lineToSend.isEmpty())
+        if(!lineToSend.isEmpty()) {
+        	System.out.println("Sending remaining " +localBlockSize +" ndvi time series ");
         	sendToKafka(lineToSend, topic, producer);
+        }
         System.out.println("Time to send: " +(System.currentTimeMillis() - time));
         
         producer.close();

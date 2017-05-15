@@ -1,5 +1,6 @@
 package com.gogeo.experimental.flink.remote_sensing;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -13,26 +14,34 @@ import org.apache.flink.streaming.util.serialization.DeserializationSchema;
 import org.apache.flink.streaming.util.serialization.SerializationSchema;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 
-import com.gogeo.experimental.flink.remote_sensing.jobs.Bfast;
+import com.gogeo.experimental.flink.remote_sensing.jobs.BfastParametersTest;
 
-public class PipelineBFast {
+public class PipelineBFastParameters {
     public static void main(String[] args) throws Exception {
         ParameterTool params = ParameterTool.fromArgs(args);
-        String inputTopic = params.getRequired("topic");
+        
+        String propertiesFile = params.getRequired("properties_file");
+        Properties prop = new Properties();
+        prop.load(new FileReader(propertiesFile));
+        
+        String inputTopic = prop.getProperty("input_topic");
+        String outputTopic = prop.getProperty("output_topic");
+        String bfastScriptFiles = prop.getProperty("bfast_script_files");
+        String kafkaServers = prop.getProperty("kafka_servers");
         
         final StreamExecutionEnvironment env = StreamExecutionEnvironment
                 .getExecutionEnvironment();
         
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers",
-                params.get("kfk", "localhost:9092"));
+        		kafkaServers);
         
         env.addSource(
                 new FlinkKafkaConsumer010<byte[]>(inputTopic,
                         new RawSchema(), properties))
-                .map(new Bfast())
+                .map(new BfastParametersTest(bfastScriptFiles))
                 .addSink(
-                        new FlinkKafkaProducer010<String>("out",
+                        new FlinkKafkaProducer010<String>(outputTopic,
                                 new SimpleStringSchema(), properties));
 
         env.setMaxParallelism(8).execute("Flink Streaming Experimental Stream Enrichment Pipeline (Java)");
