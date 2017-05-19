@@ -77,6 +77,7 @@ public class ConvertTifToCsvData {
 			String outputFile = outputFolder +"/" +y +".txt";
 			if (new File(outputFile).exists())
 				continue;
+
 			String outputStr = "";
 			int readRaster = 0;
 			int num_reads_count = 0;

@@ -1,7 +1,7 @@
 package com.gogeo.experimental.flink.remote_sensing;
 
-import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
 import org.apache.flink.api.common.typeinfo.TypeInformation;
@@ -13,6 +13,8 @@ import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer010;
 import org.apache.flink.streaming.util.serialization.DeserializationSchema;
 import org.apache.flink.streaming.util.serialization.SerializationSchema;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 
 import com.gogeo.experimental.flink.remote_sensing.jobs.BfastParametersTest;
 
@@ -21,8 +23,10 @@ public class PipelineBFastParameters {
         ParameterTool params = ParameterTool.fromArgs(args);
         
         String propertiesFile = params.getRequired("properties_file");
+        Path path=new Path(propertiesFile);
+        FileSystem fs = FileSystem.get(URI.create(propertiesFile), new org.apache.hadoop.conf.Configuration());
         Properties prop = new Properties();
-        prop.load(new FileReader(propertiesFile));
+        prop.load(fs.open(path));
         
         String inputTopic = prop.getProperty("input_topic");
         String outputTopic = prop.getProperty("output_topic");

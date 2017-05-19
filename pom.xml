@@ -63,6 +63,11 @@
 		handling. This approach is preferred and leads to much cleaner jar files. -->
 
 	<dependencies>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.gdal/gdal -->
 		<dependency>
 			<groupId>org.gdal</groupId>
@@ -351,7 +356,8 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.gogeo.experimental.flink.remote_sensing.PipelineBFast</mainClass>
+									<!-- <mainClass>com.gogeo.experimental.flink.remote_sensing.PipelineBFast</mainClass> -->
+									<mainClass>com.gogeo.experimental.flink.remote_sensing.PipelineBFastParameters</mainClass>
 								</transformer>
 							</transformers>
 							<createDependencyReducedPom>false</createDependencyReducedPom>

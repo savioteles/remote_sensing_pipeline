@@ -1,6 +1,15 @@
-library(bfast)
-library(strucchange)
-library(wavelets)
+if(!require(bfast)){
+  install.packages("bfast")
+  library(bfast)
+}
+if(!require(strucchange)){
+  install.packages("strucchange")
+  library(strucchange)
+}
+if(!require(wavelets)){
+  install.packages("wavelets")
+  library(wavelets)
+}
 
 ###
 ###
@@ -50,11 +59,11 @@ bfit = sapply(1:nrow(rows), function(i){
       lastBreakJulianDate = format(lastBreakDate, "%Y%j")
       breaks_dates[1] = lastBreakJulianDate
     } else {
-      for(i in 1:length(breaks)) {
-        lastBreak =  breaks[i]
+      for(j in 1:length(breaks)) {
+        lastBreak =  breaks[j]
         lastBreakDate = wavelets_dates[lastBreak]
         lastBreakJulianDate = format(lastBreakDate, "%Y%j")
-        breaks_dates[i] = lastBreakJulianDate      
+        breaks_dates[j] = lastBreakJulianDate      
       }
     }
     

@@ -19,6 +19,7 @@ public class PipelineBFast {
     public static void main(String[] args) throws Exception {
         ParameterTool params = ParameterTool.fromArgs(args);
         String inputTopic = params.getRequired("topic");
+        String scriptPath = params.getRequired("script");
         
         final StreamExecutionEnvironment env = StreamExecutionEnvironment
                 .getExecutionEnvironment();
@@ -30,7 +31,7 @@ public class PipelineBFast {
         env.addSource(
                 new FlinkKafkaConsumer010<byte[]>(inputTopic,
                         new RawSchema(), properties))
-                .map(new Bfast())
+                .map(new Bfast(scriptPath))
                 .addSink(
                         new FlinkKafkaProducer010<String>("out",
                                 new SimpleStringSchema(), properties));

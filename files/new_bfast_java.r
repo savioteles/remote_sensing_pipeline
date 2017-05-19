@@ -1,4 +1,7 @@
-library(bfast)
+if(!require(bfast)){
+  install.packages("bfast")
+  library(bfast)
+}
 
 ###
 ###
@@ -43,11 +46,11 @@ bfit = sapply(1:nrow(rows), function(i){
       lastBreakJulianDate = format(lastBreakDate, "%Y%j")
       breaks_dates[1] = lastBreakJulianDate
     } else {
-      for(i in 1:length(breaks)) {
-        lastBreak =  breaks[i]
+      for(j in 1:length(breaks)) {
+        lastBreak =  breaks[j]
         lastBreakDate = dates[lastBreak]
         lastBreakJulianDate = format(lastBreakDate, "%Y%j")
-        breaks_dates[i] = lastBreakJulianDate      
+        breaks_dates[j] = lastBreakJulianDate      
       }
     }
     
