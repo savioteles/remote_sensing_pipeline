@@ -52,7 +52,7 @@ public class LoadCsvData {
         String lineToSend = "";
         int localBlockSize = 0;
         
-        for (File file: dir.listFiles(fileFilter)) {
+        for (File file: dir.listFiles()) {
         	System.out.println("Loading file " +file.getName());
 	        BufferedReader br = new BufferedReader(
 	                new FileReader(file));

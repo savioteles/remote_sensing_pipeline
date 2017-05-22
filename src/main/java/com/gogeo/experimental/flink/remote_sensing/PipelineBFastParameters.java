@@ -48,7 +48,7 @@ public class PipelineBFastParameters {
                         new FlinkKafkaProducer010<String>(outputTopic,
                                 new SimpleStringSchema(), properties));
 
-        env.setMaxParallelism(8).execute("Flink Streaming Experimental Stream Enrichment Pipeline (Java)");
+        env.execute("Flink Streaming Experimental Stream Enrichment Pipeline (Java)");
     }
 
     private static class RawSchema implements DeserializationSchema<byte[]>, SerializationSchema<byte[]> {

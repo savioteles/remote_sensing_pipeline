@@ -1,13 +1,13 @@
 if(!require(bfast)){
-  install.packages("bfast")
+  install.packages("bfast",repos = "https://cran.fiocruz.br/")
   library(bfast)
 }
 if(!require(strucchange)){
-  install.packages("strucchange")
+  install.packages("strucchange",repos = "https://cran.fiocruz.br/")
   library(strucchange)
 }
 if(!require(wavelets)){
-  install.packages("wavelets")
+  install.packages("wavelets",repos = "https://cran.fiocruz.br/")
   library(wavelets)
 }
 

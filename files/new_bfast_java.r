@@ -1,5 +1,5 @@
 if(!require(bfast)){
-  install.packages("bfast")
+  install.packages("bfast",repos = "https://cran.fiocruz.br/")
   library(bfast)
 }
 
