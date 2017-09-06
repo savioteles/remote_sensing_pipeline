@@ -1,4 +1,4 @@
-package com.gogeo.experimental.flink.remote_sensing;
+package com.gogeo.real_time.pipeline;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -13,13 +13,13 @@ import org.apache.flink.streaming.util.serialization.DeserializationSchema;
 import org.apache.flink.streaming.util.serialization.SerializationSchema;
 import org.apache.flink.streaming.util.serialization.SimpleStringSchema;
 
-import com.gogeo.experimental.flink.remote_sensing.jobs.Bfast;
+import com.gogeo.real_time.jobs.TimeSeriesDataHandler;
 
-public class PipelineBFast {
+public class PipelineTimeSeriesData {
     public static void main(String[] args) throws Exception {
         ParameterTool params = ParameterTool.fromArgs(args);
-        String inputTopic = params.getRequired("topic");
-        String scriptPath = params.getRequired("script");
+        String inputTopic = params.getRequired("input_topic");
+        String outputTopic = params.getRequired("output_topic");
         
         final StreamExecutionEnvironment env = StreamExecutionEnvironment
                 .getExecutionEnvironment();
@@ -31,9 +31,9 @@ public class PipelineBFast {
         env.addSource(
                 new FlinkKafkaConsumer010<byte[]>(inputTopic,
                         new RawSchema(), properties))
-                .map(new Bfast(scriptPath))
+                .map(new TimeSeriesDataHandler())
                 .addSink(
-                        new FlinkKafkaProducer010<String>("out",
+                        new FlinkKafkaProducer010<String>(outputTopic,
                                 new SimpleStringSchema(), properties));
 
         env.setMaxParallelism(8).execute("Flink Streaming Experimental Stream Enrichment Pipeline (Java)");
