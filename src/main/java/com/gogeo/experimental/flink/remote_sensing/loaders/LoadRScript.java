@@ -2,11 +2,14 @@ package com.gogeo.experimental.flink.remote_sensing.loaders;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Properties;
 
 import javax.script.ScriptException;
 
 import org.apache.flink.api.java.utils.ParameterTool;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -22,16 +25,21 @@ public class LoadRScript {
     public static void main(String[] args) throws IOException,
             InterruptedException, ScriptException {
     	ParameterTool params = ParameterTool.fromArgs(args);
+    	String propertiesFile = params.getRequired("properties_file");
+        Path path=new Path(propertiesFile);
+        FileSystem fs = FileSystem.get(URI.create(propertiesFile), new org.apache.hadoop.conf.Configuration());
+        Properties prop = new Properties();
+        prop.load(fs.open(path));
+        
+    	int initIndex = Integer.parseInt(prop.getProperty("init_index"));
+    	int endIndex = Integer.parseInt(prop.getProperty("end_index"));
+    	String inputFile = prop.getProperty("input_file");
+    	String outputDir = prop.getProperty("output_dir");
     	
-    	int initIndex = params.getInt("init_index", -1);
-    	int endIndex = params.getInt("end_index", -1);
-    	String inputFile = params.get("input_file");
-    	String outputDir = params.get("output_dir");
+    	File scriptFile = new File(prop.getProperty("script_file"));
     	
-    	File scriptFile = new File(params.getRequired("script_file"));
-    	
-    	String kafkaServers = params.getRequired("kafka_servers");
-    	String topic = params.getRequired("kafka_topic");
+    	String kafkaServers = prop.getProperty("kafka_servers");
+    	String topic = prop.getProperty("kafka_topic");
     	
     	
         Properties props = new Properties();

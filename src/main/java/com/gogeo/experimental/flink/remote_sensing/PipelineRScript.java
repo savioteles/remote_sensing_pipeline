@@ -38,6 +38,7 @@ public class PipelineRScript {
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers",
         		kafkaServers);
+        properties.setProperty("auto.offset.reset", "earliest");
         
         env.addSource(
                 new FlinkKafkaConsumer010<byte[]>(inputTopic,

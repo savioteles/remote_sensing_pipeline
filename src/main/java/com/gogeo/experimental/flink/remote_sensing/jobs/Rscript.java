@@ -43,7 +43,7 @@ public class Rscript extends RichMapFunction<byte[], String> {
     public String runScript(File script, Params params) throws IOException,
             InterruptedException, ScriptException {
 
-        String command = "sudo Rscript " +script.getAbsolutePath();
+        String command = "Rscript " +script.getAbsolutePath();
         if (params != null)
         	command += " " +params;
         Process child = Runtime.getRuntime().exec(command
